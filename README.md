@@ -17,7 +17,7 @@ Estudo de caso de JavaScript com Bootstrap 5 para cadastro, listagem, edição, 
 docker compose up --build -d
 ```
 
-3. Acesse http://localhost:8080 no navegador.
+3. Acesse http://localhost:8081 no navegador.
 4. Para encerrar: `docker compose down`.
 
 ## Executar sem Docker
