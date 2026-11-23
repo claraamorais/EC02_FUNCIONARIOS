@@ -1,38 +1,380 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DevTech | Gestão de Funcionários</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DevTech | Gestão de Funcionários</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bs-primary: #963F32;
+            --bs-primary-rgb: 150, 63, 50;
+        }
+
+        body {
+            background-color: #F6F0EA;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Cabeçalho */
+        header {
+            background-color: #963F32;
+            color: white;
+        }
+
+        /* Cartões */
+        .card {
+            background-color: white;
+            border: 1px solid #E8D8CE;
+            border-radius: 12px;
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        /* Títulos */
+        h2, h3 {
+            color: #963F32;
+            font-weight: 600;
+        }
+
+        /* Botões principais */
+        .btn-primary {
+            --bs-btn-bg: #963F32;
+            --bs-btn-border-color: #963F32;
+            --bs-btn-hover-bg: #793126;
+            --bs-btn-hover-border-color: #793126;
+            --bs-btn-active-bg: #68291F;
+            --bs-btn-active-border-color: #68291F;
+            --bs-btn-disabled-bg: #963F32;
+            --bs-btn-disabled-border-color: #963F32;
+        }
+
+        /* Botão cancelar */
+        .btn-outline-secondary {
+            --bs-btn-color: #963F32;
+            --bs-btn-border-color: #963F32;
+            --bs-btn-hover-bg: #963F32;
+            --bs-btn-hover-border-color: #963F32;
+            --bs-btn-hover-color: white;
+        }
+
+        /* Contador */
+        .text-bg-primary {
+            background-color: #963F32 !important;
+            color: white !important;
+        }
+
+        /* Tabela */
+        .table-dark {
+            --bs-table-bg: #963F32;
+            --bs-table-color: white;
+            --bs-table-border-color: #A75D52;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #F3E4DD;
+        }
+
+        /* Campos do formulário */
+        .form-control:focus {
+            border-color: #C78B80;
+            box-shadow: 0 0 0 0.25rem rgba(150, 63, 50, 0.2);
+        }
+
+        /* Média salarial */
+        .text-primary {
+            color: #963F32 !important;
+        }
+
+        /* Caixas dos relatórios */
+        .relatorio {
+            background-color: #FFFCFA;
+            border: 1px solid #E8D8CE;
+            border-radius: 10px;
+            padding: 18px;
+            height: 100%;
+        }
+
+        .relatorio h3 {
+            margin-bottom: 15px;
+        }
+
+        /* Rodapé */
+        footer {
+            color: #795548;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
 </head>
-<body class="bg-light">
-  <header class="bg-primary text-white py-4 mb-4 shadow-sm">
-    <div class="container"><h1 class="h3 mb-1">Gestão de Funcionários</h1><p class="mb-0">Startup de Tecnologia · EC02</p></div>
-  </header>
-  <main class="container pb-5">
-    <div id="mensagem" class="alert d-none" role="alert"></div>
-    <section class="card shadow-sm mb-4"><div class="card-body">
-      <h2 class="h5" id="tituloFormulario">Cadastrar funcionário</h2>
-      <form id="formFuncionario" class="row g-3">
-        <div class="col-md-6"><label for="nome" class="form-label">Nome</label><input id="nome" class="form-control" type="text" maxlength="100" required></div>
-        <div class="col-md-2"><label for="idade" class="form-label">Idade</label><input id="idade" class="form-control" type="number" min="16" max="120" step="1" required></div>
-        <div class="col-md-4"><label for="cargo" class="form-label">Cargo</label><input id="cargo" class="form-control" type="text" maxlength="80" required></div>
-        <div class="col-md-4"><label for="salario" class="form-label">Salário (R$)</label><input id="salario" class="form-control" type="number" min="0.01" step="0.01" required></div>
-        <div class="col-12 d-flex gap-2"><button id="btnSalvar" type="submit" class="btn btn-primary">Cadastrar</button><button id="btnCancelar" type="button" class="btn btn-outline-secondary d-none">Cancelar edição</button></div>
-      </form>
-    </div></section>
-    <section class="card shadow-sm mb-4"><div class="card-body">
-      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3"><h2 class="h5 mb-0">Funcionários cadastrados</h2><span id="contador" class="badge text-bg-primary">0 funcionários</span></div>
-      <div class="table-responsive"><table class="table table-striped table-hover align-middle"><thead class="table-dark"><tr><th>ID</th><th>Nome</th><th>Idade</th><th>Cargo</th><th>Salário</th><th>Ações</th></tr></thead><tbody id="tabelaFuncionarios"></tbody></table></div>
-    </div></section>
-    <section class="card shadow-sm"><div class="card-body"><h2 class="h5 mb-3">Relatórios</h2><div class="row g-3">
-      <div class="col-lg-6"><div class="border rounded p-3 h-100"><h3 class="h6">Salários acima de R$ 5.000</h3><ul id="relatorioAltosSalarios" class="mb-0"></ul></div></div>
-      <div class="col-lg-6"><div class="border rounded p-3 h-100"><h3 class="h6">Média salarial</h3><p id="relatorioMedia" class="fs-4 fw-bold text-primary mb-0">R$ 0,00</p></div></div>
-      <div class="col-lg-6"><div class="border rounded p-3 h-100"><h3 class="h6">Cargos únicos</h3><ul id="relatorioCargos" class="mb-0"></ul></div></div>
-      <div class="col-lg-6"><div class="border rounded p-3 h-100"><h3 class="h6">Nomes em maiúsculo</h3><ul id="relatorioNomes" class="mb-0"></ul></div></div>
-    </div></div></section>
-  </main>
-  <script src="app.js"></script>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="py-4 mb-4 shadow-sm">
+        <div class="container">
+            <h1 class="h3 mb-1">Gestão de Funcionários</h1>
+            <p class="mb-0">Startup de Tecnologia · EC02</p>
+        </div>
+    </header>
+
+    <main class="container pb-5">
+
+        <!-- Mensagens -->
+        <div id="mensagem"
+             class="alert d-none"
+             role="alert">
+        </div>
+
+        <!-- Cadastro de funcionários -->
+        <section class="card shadow-sm mb-4">
+
+            <div class="card-body">
+
+                <h2 class="h5 mb-4" id="tituloFormulario">
+                    Cadastrar funcionário
+                </h2>
+
+                <form id="formFuncionario" class="row g-3">
+
+                    <!-- Nome -->
+                    <div class="col-md-6">
+                        <label for="nome" class="form-label">
+                            Nome
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nome"
+                            class="form-control"
+                            maxlength="100"
+                            placeholder="Nome completo"
+                            required>
+                    </div>
+
+                    <!-- Idade -->
+                    <div class="col-md-2">
+                        <label for="idade" class="form-label">
+                            Idade
+                        </label>
+
+                        <input
+                            type="number"
+                            id="idade"
+                            class="form-control"
+                            min="16"
+                            max="120"
+                            step="1"
+                            required>
+                    </div>
+
+                    <!-- Cargo -->
+                    <div class="col-md-4">
+                        <label for="cargo" class="form-label">
+                            Cargo
+                        </label>
+
+                        <input
+                            type="text"
+                            id="cargo"
+                            class="form-control"
+                            maxlength="80"
+                            placeholder="Ex: Desenvolvedor"
+                            required>
+                    </div>
+
+                    <!-- Salário -->
+                    <div class="col-md-4">
+                        <label for="salario" class="form-label">
+                            Salário (R$)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="salario"
+                            class="form-control"
+                            min="0.01"
+                            step="0.01"
+                            placeholder="0.00"
+                            required>
+                    </div>
+
+                    <!-- Botões -->
+                    <div class="col-12 d-flex gap-2">
+
+                        <button
+                            type="submit"
+                            id="btnSalvar"
+                            class="btn btn-primary">
+                            Cadastrar
+                        </button>
+
+                        <button
+                            type="button"
+                            id="btnCancelar"
+                            class="btn btn-outline-secondary d-none">
+                            Cancelar edição
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </section>
+
+        <!-- Listagem de funcionários -->
+        <section class="card shadow-sm mb-4">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+
+                    <h2 class="h5 mb-0">
+                        Funcionários cadastrados
+                    </h2>
+
+                    <span
+                        id="contador"
+                        class="badge text-bg-primary">
+                        0 funcionários
+                    </span>
+
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="table table-striped table-hover align-middle">
+
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Idade</th>
+                                <th>Cargo</th>
+                                <th>Salário</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tabelaFuncionarios">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Relatórios -->
+        <section class="card shadow-sm">
+
+            <div class="card-body">
+
+                <h2 class="h5 mb-4">
+                    Relatórios
+                </h2>
+
+                <div class="row g-3">
+
+                    <!-- Salários acima de 5000 -->
+                    <div class="col-lg-6">
+
+                        <div class="relatorio">
+
+                            <h3 class="h6">
+                                Salários acima de R$ 5.000
+                            </h3>
+
+                            <ul
+                                id="relatorioAltosSalarios"
+                                class="mb-0">
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Média salarial -->
+                    <div class="col-lg-6">
+
+                        <div class="relatorio">
+
+                            <h3 class="h6">
+                                Média salarial
+                            </h3>
+
+                            <p
+                                id="relatorioMedia"
+                                class="fs-4 fw-bold text-primary mb-0">
+                                R$ 0,00
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Cargos únicos -->
+                    <div class="col-lg-6">
+
+                        <div class="relatorio">
+
+                            <h3 class="h6">
+                                Cargos únicos
+                            </h3>
+
+                            <ul
+                                id="relatorioCargos"
+                                class="mb-0">
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Nomes em maiúsculo -->
+                    <div class="col-lg-6">
+
+                        <div class="relatorio">
+
+                            <h3 class="h6">
+                                Nomes em maiúsculo
+                            </h3>
+
+                            <ul
+                                id="relatorioNomes"
+                                class="mb-0">
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <p class="mb-0">
+            DevTech Academy | Sistema de Gestão de Funcionários
+        </p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="app.js"></script>
+
 </body>
 </html>

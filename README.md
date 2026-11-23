@@ -23,16 +23,5 @@ docker compose up --build -d
 ## Executar sem Docker
 Abra `index.html` no navegador (é necessária conexão para carregar o Bootstrap pelo CDN).
 
-## Publicar no GitHub
-```bash
-git init
-git add .
-git commit -m "Implementa EC02 gestao de funcionarios"
-git branch -M main
-git remote add origin https://github.com/SEU_USUARIO/EC02_Funcionarios.git
-git push -u origin main
-```
-Crie o repositório vazio no GitHub antes de executar os comandos e substitua `SEU_USUARIO`.
-
 ## Observações
 Os dados ficam salvos no `localStorage` do navegador em uso; não há servidor de banco de dados. O Docker serve os arquivos estáticos com Nginx. O Bootstrap é carregado via CDN.
